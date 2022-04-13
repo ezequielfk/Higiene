@@ -1,5 +1,5 @@
 ---
-title: "Data Processing Script for Máster en Neurociencias"
+title: "Scripts for Higiene Project"
 author: "Flores-Kanter PE"
 output:
   pdf_document:
@@ -10,6 +10,7 @@ output:
     highlight: pygments
     toc: yes
 ---
+
 ```{r}
 if(!"devtools" %in% row.names(installed.packages())){
   install.packages("devtools")
@@ -25,11 +26,14 @@ library(SemNeT)
 library(NetworkToolbox)
 library(tidyverse)
 ```
+
+
 #Data Processing Script
 
 ```{r}
-text.df<-read.csv("relatos.csv", sep = ";", header = TRUE) #Cambiar bases de acuerdo a los objetivos.
-grp<-read.csv("grupos.csv", sep = ";", header = TRUE) #Cambiar bases de acuerdo a los objetivos.
+
+text.df<-read.csv("txt_viejos.csv", sep = ";", header = TRUE) #Cambiar bases de acuerdo a los objetivos. "txt_viejos.csv"
+grp<-read.csv("group_viejos.csv", sep = ";", header = TRUE) #Cambiar bases de acuerdo a los objetivos. "group_viejos.csv"
 
 #The first function is a wrapper for the base R tolower function.
 
@@ -97,27 +101,45 @@ colnames(grp) <- c("conditions","times")
 # Attach 'Group' variable to the binary response matrix
 behav <- cbind(grp, Abinar)
 
-#write.csv(behav, "binaryResponse.csv", row.names = FALSE)
-
+#write.csv(behav, "binaryResponse_jovenes.csv", row.names = FALSE)
+write.csv(behav, "binaryResponse_viejos.csv", row.names = FALSE)
 
 # Create groups response matrices
 
-jovenest1 <-behav %>% 
-  filter(conditions=="jovenes" & times==1) %>% 
+sinHigiene_e1 <-behav %>% 
+  filter(conditions=="sinhigiene" & times=="E1") %>% 
 select(-c("conditions","times"))
 
-
-jovenest2 <-behav %>% 
-  filter(conditions=="jovenes" & times==2) %>% 
+sinHigiene_e2 <-behav %>% 
+  filter(conditions=="sinhigiene" & times=="E2") %>% 
 select(-c("conditions","times"))
 
-
-viejost1 <-behav %>% 
-  filter(conditions=="viejos" & times==1) %>% 
+sinHigiene_t1 <-behav %>% 
+  filter(conditions=="sinhigiene" & times=="T1") %>% 
 select(-c("conditions","times"))
 
-viejost2 <-behav %>% 
-  filter(conditions=="viejos" & times==2) %>% 
+sinHigiene_t2 <-behav %>% 
+  filter(conditions=="sinhigiene" & times=="T2") %>% 
 select(-c("conditions","times"))
+
+conHigiene_e1 <-behav %>% 
+  filter(conditions=="conhigiene" & times=="E1") %>% 
+select(-c("conditions","times"))
+
+conHigiene_e2 <-behav %>% 
+  filter(conditions=="conhigiene" & times=="E2") %>% 
+select(-c("conditions","times"))
+
+conHigiene_t1 <-behav %>% 
+  filter(conditions=="conhigiene" & times=="T1") %>% 
+select(-c("conditions","times"))
+
+conHigiene_t2 <-behav %>% 
+  filter(conditions=="conhigiene" & times=="T2") %>% 
+select(-c("conditions","times"))
+
 
 ```
+
+
+
